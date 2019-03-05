@@ -1,0 +1,38 @@
+<!-- Inherit repeated HTML structures from layout.html -->
+{% extends "webstore/layout.html" %}
+{% load widget_tweaks %}
+{% block content %}
+<div class="container search">
+    <div class="row">
+        <form method="GET">
+            {{ filter.form }}
+            <input type="submit" class="btn btn-primary" value="Search" />
+        </form>
+    </div>
+</div>
+<div id="store_items">
+    {% for item in filter.qs %}
+    <div class="card" style="width: 18rem;">
+        <img src="{{ item.image.url }}" class="card-img-top item-img" alt="...">
+        <div class="card-body">
+            <h5 class="card-title"><a href="{% url 'item-detail' item.id %}">{{ item.name }}</a></h5>
+            <small>{{ item.code }}</small>
+            <p class="card-text">{{ item.description_short }} <small><a href="{% url 'item-detail' item.id %}">More</a></small></p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>{{ item.price }} €</strong></li>
+        </ul>
+        <div class="card-body">
+            <form id="{{ item.id }}" class="form-add-ajax" method="POST" action="{% url 'cart:add' %}">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ item.id }}" />
+                <button class="btn btn-success" type="submit">Add
+                    to Cart</a>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock content %}

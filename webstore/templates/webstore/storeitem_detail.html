@@ -1,0 +1,22 @@
+<!-- Inherit repeated HTML structures from layout.html -->
+{% extends "webstore/layout.html" %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h5>{{ object.name }}</h5>
+        <small>{{ object.code }}</small>
+    </div>
+    <div class="card-body">
+        <img src="{{ object.image.url }}" class="item-img" alt="...">
+        <p class="card-text">{{ object.description }}</p>
+        <h5>Price: <strong>{{ object.price }}</strong>€</h5>
+        <hr>
+        <form id="{{ object.id }}" class="form-add-ajax" method="POST" action="{% url 'cart:add' %}">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ object.id }}" />
+            <button class="btn btn-success" type="submit">Add
+                to Cart</a>
+        </form>
+    </div>
+</div>
+{% endblock content %}
