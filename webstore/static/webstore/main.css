@@ -48,6 +48,15 @@ ul {
   }
 }
 
+@media (max-width: 400px) {
+  #store_items {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-row-gap: 10px;
+  }
+}
+
 .search {
   margin: 0 auto;
   width: 100%;
